@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:postgresql://postgres:5432/clientes_db
@@ -7,3 +8,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+

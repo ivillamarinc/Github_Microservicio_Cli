@@ -17,41 +17,54 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    // CREATE
+    // CREATE -> 201 Created
     @PostMapping
     public ResponseEntity<Cliente> crearCliente(@RequestBody Cliente cliente) {
-        return ResponseEntity.ok(clienteService.guardarCliente(cliente));
+        Cliente creado = clienteService.guardarCliente(cliente);
+
+        // STATE-BASED: si se guardó bien -> 201
+        return ResponseEntity.status(201).body(creado);
     }
 
-    // READ ALL
+    // READ ALL -> 200
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
-    // READ BY ID
+    // READ BY ID -> IF/ELSE (200 o 404)
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obtenerCliente(@PathVariable Long id) {
-        return clienteService.obtenerClientePorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        var opt = clienteService.obtenerClientePorId(id);
+
+        // EJEMPLO pedido: IF código 200 muestra el cliente
+        if (opt.isPresent()) {
+            return ResponseEntity.ok(opt.get()); // 200 OK
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 
-    // UPDATE
+    // UPDATE -> 200
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> actualizarCliente(
             @PathVariable Long id,
             @RequestBody Cliente cliente) {
 
-        return ResponseEntity.ok(
-                clienteService.actualizarCliente(id, cliente)
-        );
+        Cliente actualizado = clienteService.actualizarCliente(id, cliente);
+        return ResponseEntity.ok(actualizado);
     }
 
-    // DELETE
+    // DELETE -> 204
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
         clienteService.eliminarCliente(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
 }
+
+
