@@ -54,6 +54,12 @@ jobs:
             --name $AKS_CLUSTER_NAME \
             --overwrite-existing
 
+      - name: Deploy Kubernetes resources
+        run: |
+          kubectl apply -f k8s/postgres-pvc.yaml
+          kubectl apply -f k8s/postgres-deploy.yaml
+          kubectl apply -f k8s/microservice-deployment.yaml
+
       - name: Update deployment image
         run: |
           kubectl set image deployment/microservice-cliente \
