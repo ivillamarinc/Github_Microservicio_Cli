@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: microservice-cliente
-        image: clienteacrharold.azurecr.io/microservice-cliente:latest
+        image: clienteacrharold.azurecr.io/microservice-cliente:1.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
