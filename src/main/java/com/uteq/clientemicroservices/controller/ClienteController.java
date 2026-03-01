@@ -56,11 +56,11 @@ public class ClienteController {
     }
 
     // DELETE -> 204
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
         clienteService.eliminarCliente(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
 
 
